@@ -1,0 +1,24 @@
+. {
+    box-sizing: content-box;
+}
+
+h2 {
+    margin: 16px;
+}
+
+body {
+    background-color: whitesmoke;
+}
+
+img {
+    max-width: 100%;
+}
+
+#logo {
+    font-family: "Caveat", serif;
+    font-size: 32px;
+}
+
+* {
+    font-family: 'Comfortaa', 'Arial', 'Helvetica', sans-serif;
+}

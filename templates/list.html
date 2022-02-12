@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ months_cost.name.capitalize() }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>Здравствуйте! Ваши расходы за {{ months_cost.name }}:</h1>
+
+        <div class="row">
+            <div class="col-9">
+                <img src="{{ url_for('static', filename='images/diagrams/example.png') }}" class="card-img-top" alt="{{ months_cost.name }}">
+            </div>
+            <div class="col">
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        {% for item in months_cost['items'] %}
+                            <li class="list-group-item">
+                                <span>{{ item.title }}: {{ item.value }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col">
+                <h3>
+                    Добавить расходы:
+                </h3>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Название</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Транспорт/Еда/Развлечения"
+                           aria-label="Название расхода"
+                           aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Стоимость</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="0" aria-label="Количество">
+                    <div class="input-group-append">
+                        <span class="input-group-text">₽</span>
+                    </div>
+                    <button type="button" class="btn btn-success">Добавить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
