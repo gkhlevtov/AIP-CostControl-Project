@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
+    Gde moi den`gi
 {% endblock %}
 
 {% block content %}
@@ -16,9 +17,10 @@
                 </p></b>
             </div>
             <div class="col-md-7 col-sm-6">
-                <img src="{{ url_for('static', filename='images/diagrams/example.png') }}" alt="Диаграмма расходов"
-                     width="100%" height="100%">
-
+                <img src="{{ url_for('static', filename='images/diagrams/example.png') }}"
+                     class="img-fluid rounded"
+                     alt="Диаграмма расходов"
+                >
             </div>
         </div>
     </div>
