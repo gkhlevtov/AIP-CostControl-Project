@@ -32,7 +32,7 @@ months_costs = [
     {
         'id': "january",
         'name': 'январь',
-        'cover': 'images/diagrams/money.jpg',
+        'cover': 'images/diagrams/example.png',
         'items': [
             {
                 'title': 'Еда', 'value': '4200'
@@ -44,10 +44,7 @@ months_costs = [
                 'title': 'Одежда', 'value': '6890'
             },
             {
-                'title': 'ЖКХ', 'value': '3350'
-            },
-            {
-                'title': 'Игры', 'value': '13499'
+                'title': 'Игры', 'value': '3452'
             },
             {
                 'title': 'Гачи мерч', 'value': '300'
@@ -57,13 +54,16 @@ months_costs = [
     {
         'id': "february",
         'name': 'февраль',
-        'cover': 'images/diagrams/money.jpg',
+        'cover': 'images/diagrams/example.png',
         'items': [
             {
                 'title': 'Еда', 'value': '4200'
             },
             {
                 'title': 'Бензин', 'value': '1000'
+            },
+{
+                'title': 'Арбуз', 'value': '480'
             },
             {
                 'title': 'Одежда', 'value': '6890'
@@ -72,36 +72,30 @@ months_costs = [
                 'title': 'ЖКХ', 'value': '3350'
             },
             {
-                'title': 'Игры', 'value': '13499'
+                'title': 'Игры', 'value': '6523'
             },
         ]
     },
     {
         'id': "march",
         'name': 'март',
-        'cover': 'images/diagrams/money.jpg',
+        'cover': 'images/diagrams/example.png',
         'items': [
             {
-                'title': 'Еда', 'value': '4200'
+                'title': 'Вода 0.5 л', 'value': '17'
             },
             {
-                'title': 'Бензин', 'value': '1000'
+                'title': 'Шоколадка', 'value': '1000'
             },
             {
-                'title': 'Одежда', 'value': '6890'
-            },
-            {
-                'title': 'ЖКХ', 'value': '3350'
-            },
-            {
-                'title': 'Игры', 'value': '13499'
+                'title': 'Игры', 'value': '3000'
             },
         ]
     },
     {
         'id': "april",
         'name': 'апрель',
-        'cover': 'images/diagrams/money.jpg',
+        'cover': 'images/diagrams/example.png',
         'items': [
             {
                 'title': 'Еда', 'value': '4200'
@@ -123,117 +117,84 @@ months_costs = [
     {
         'id': "may",
         'name': 'май',
-        'cover': 'images/diagrams/money.jpg',
+        'cover': 'images/diagrams/example.png',
         'items': [
             {
                 'title': 'Еда', 'value': '4200'
             },
             {
-                'title': 'Бензин', 'value': '1000'
-            },
-            {
                 'title': 'Одежда', 'value': '6890'
-            },
-            {
-                'title': 'ЖКХ', 'value': '3350'
-            },
-            {
-                'title': 'Игры', 'value': '13499'
             },
         ]
     },
     {
         'id': "june",
         'name': 'июнь',
-        'cover': 'images/diagrams/money.jpg',
+        'cover': 'images/diagrams/example.png',
         'items': [
             {
                 'title': 'Еда', 'value': '4200'
             },
             {
-                'title': 'Бензин', 'value': '1000'
-            },
-            {
-                'title': 'Одежда', 'value': '6890'
+                'title': 'Мороженое', 'value': '500'
             },
             {
                 'title': 'ЖКХ', 'value': '3350'
-            },
-            {
-                'title': 'Игры', 'value': '13499'
             },
         ]
     },
     {
         'id': "july",
         'name': 'июль',
-        'cover': 'images/diagrams/money.jpg',
+        'cover': 'images/diagrams/example.png',
         'items': [
             {
-                'title': 'Еда', 'value': '4200'
+                'title': 'Еда', 'value': '5000'
             },
             {
-                'title': 'Бензин', 'value': '1000'
+                'title': 'Плавки', 'value': '2500'
             },
-            {
-                'title': 'Одежда', 'value': '6890'
+{
+                'title': 'Сланцы', 'value': '1300'
             },
-            {
-                'title': 'ЖКХ', 'value': '3350'
-            },
-            {
-                'title': 'Игры', 'value': '13499'
+{
+                'title': 'Очки', 'value': '800'
             },
         ]
     },
     {
         'id': "august",
         'name': 'август',
-        'cover': 'images/diagrams/money.jpg',
+        'cover': 'images/diagrams/example.png',
         'items': [
             {
                 'title': 'Еда', 'value': '4200'
             },
             {
-                'title': 'Бензин', 'value': '1000'
-            },
-            {
-                'title': 'Одежда', 'value': '6890'
-            },
-            {
-                'title': 'ЖКХ', 'value': '3350'
-            },
-            {
-                'title': 'Игры', 'value': '13499'
+                'title': 'Карандаши', 'value': '100'
             },
         ]
     },
     {
         'id': "september",
         'name': 'сентябрь',
-        'cover': 'images/diagrams/money.jpg',
+        'cover': 'images/diagrams/example.png',
         'items': [
             {
-                'title': 'Еда', 'value': '4200'
+                'title': 'Еда', 'value': '3400'
             },
             {
-                'title': 'Бензин', 'value': '1000'
-            },
-            {
-                'title': 'Одежда', 'value': '6890'
+                'title': 'Бензин', 'value': '2000'
             },
             {
                 'title': 'ЖКХ', 'value': '3350'
-            },
-            {
-                'title': 'Игры', 'value': '13499'
             },
         ]
     },
     {
         'id': "october",
         'name': 'октябрь',
-        'cover': 'images/diagrams/money.jpg',
+        'cover': 'images/diagrams/example.png',
         'items': [
             {
                 'title': 'Еда', 'value': '4200'
@@ -255,7 +216,7 @@ months_costs = [
     {
         'id': "november",
         'name': 'ноябрь',
-        'cover': 'images/diagrams/money.jpg',
+        'cover': 'images/diagrams/example.png',
         'items': [
             {
                 'title': 'Еда', 'value': '4200'
@@ -277,22 +238,16 @@ months_costs = [
     {
         'id': "december",
         'name': 'декабрь',
-        'cover': 'images/diagrams/money.jpg',
+        'cover': 'images/diagrams/example.png',
         'items': [
             {
-                'title': 'Еда', 'value': '4200'
+                'title': 'Еда', 'value': '200'
             },
             {
-                'title': 'Бензин', 'value': '1000'
+                'title': 'Одежда', 'value': '4000'
             },
             {
-                'title': 'Одежда', 'value': '6890'
-            },
-            {
-                'title': 'ЖКХ', 'value': '3350'
-            },
-            {
-                'title': 'Игры', 'value': '13499'
+                'title': 'Игры', 'value': '5000'
             },
         ]
     }

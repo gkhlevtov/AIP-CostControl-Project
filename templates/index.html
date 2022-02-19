@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Мои расходы
+{% endblock %}
+
+{% block content %}
+    <h1 class="mb-5">Мои расходы</h1>
+    <div class="row row-cols-1 row-cols-xl-3 row-cols-lg-2 gy-4">
+        {% for months_cost in months_costs %}
+            <div class="col">
+                {% include 'cost-list.html' %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

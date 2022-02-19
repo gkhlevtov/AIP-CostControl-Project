@@ -10,10 +10,10 @@
         <h1>Здравствуйте! Ваши расходы за {{ months_cost.name }}:</h1>
 
         <div class="row">
-            <div class="col-9">
+            <div class="col-md-9 col-sm-6">
                 <img src="{{ url_for('static', filename='images/diagrams/example.png') }}" class="card-img-top" alt="{{ months_cost.name }}">
             </div>
-            <div class="col">
+            <div class="col-md-3 col-sm-6">
                 <div class="card">
                     <ul class="list-group list-group-flush">
                         {% for item in months_cost['items'] %}
