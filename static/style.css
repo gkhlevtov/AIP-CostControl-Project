@@ -24,5 +24,7 @@ img {
 }
 
 footer {
-    background-color: dimgray;
+    background-color: #212529;
+    color: white;
+    padding: 16px;
 }
