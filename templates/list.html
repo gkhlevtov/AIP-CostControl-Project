@@ -13,7 +13,7 @@
             <div class="col-9">
                 <img src="{{ url_for('static', filename='images/diagrams/example.png') }}" class="card-img-top" alt="{{ months_cost.name }}">
             </div>
-            <div class="col">
+            <div class="col-3">
                 <div class="card">
                     <ul class="list-group list-group-flush">
                         {% for item in months_cost['items'] %}
