@@ -1,12 +1,12 @@
 <div class="card">
-    <img src="{{ url_for('static', filename=months_cost.cover) }}" class="card-img-top" alt="{{ months_cost.name }}">
+    <img src="{{ url_for('static', filename=user_cost.cover) }}" class="card-img-top" alt="{{ user_cost.name }}">
     <div class="card-header">
-        <a href="{{ url_for('get_costs', month_name=months_cost.id) }}">
-            <strong>{{ months_cost.name.capitalize() }}</strong>
+        <a href="{{ url_for('get_costs', cost_id=user_cost.id) }}">
+            <strong>{{ user_cost.name.capitalize() }}</strong>
         </a>
     </div>
     <ul class="list-group list-group-flush">
-        {% for item in months_cost['items'] %}
+        {% for item in user_cost['items'] %}
             <li class="list-group-item">
                 <span>{{ item.title }}: {{ item.value }}₽</span>
             </li>

@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ months_cost.name.capitalize() }}
+    {{ user_cost.name.capitalize() }}
 {% endblock %}
 
 {% block content %}
 
     <div class="container">
-        <h1>Здравствуйте! Ваши расходы за {{ months_cost.name }}:</h1>
+        <h1>Здравствуйте! Ваши расходы "{{ user_cost.name }}":</h1>
 
         <div class="row">
             <div class="col-md-9 col-sm-6">
-                <img src="{{ url_for('static', filename='images/diagrams/example.png') }}" class="card-img-top" alt="{{ months_cost.name }}">
+                <img src="{{ url_for('static', filename='images/diagrams/example.png') }}" class="card-img-top" alt="{{ user_cost.name }}">
 
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="card">
                     <ul class="list-group list-group-flush">
-                        {% for item in months_cost['items'] %}
+                        {% for item in user_cost['items'] %}
                             <li class="list-group-item">
                                 <span>{{ item.title }}: {{ item.value }}</span>
                             </li>
