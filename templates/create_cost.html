@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Новая группа расходов
+{% endblock %}
+
+{% block content %}
+    <h1 class="mb-5">Создание новой группы расходов:</h1>
+
+    <form action="{{ url_for('create_cost') }}" method="POST">
+        {{ form.csrf_token }}
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Название</span>
+            </div>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Отпуск / Лето / Новый год">
+            {% if form.name.errors %}
+                <ul class="errors">
+                    {% for error in form.name.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Ссылка на обложку</span>
+            </div>
+            <input type="url" id="cover" name="cover" class="form-control"
+                   placeholder="https://upload.wikimedia.org/wikipedia/commons/0/0e/ITMO_University.png">
+            {% if form.cover.errors %}
+                <ul class="errors">
+                    {% for error in form.cover.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success">Сохранить</button>
+        </div>
+    </form>
+{% endblock %}

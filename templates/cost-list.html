@@ -1,7 +1,7 @@
 <div class="card">
-    <img src="{{ url_for('static', filename=user_cost.cover) }}" class="card-img-top" alt="{{ user_cost.name }}">
+    <img src="{{ user_cost.cover }}" class="card-img-top" alt="{{ user_cost.name }}">
     <div class="card-header">
-        <a href="{{ url_for('get_costs', cost_id=user_cost.id) }}">
+        <a href="{{ url_for('get_cost', cost_id=user_cost.id) }}">
             <strong>{{ user_cost.name.capitalize() }}</strong>
         </a>
     </div>
