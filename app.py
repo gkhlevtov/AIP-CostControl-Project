@@ -8,9 +8,6 @@ from wtforms.validators import DataRequired, Length, URL
 from datetime import datetime
 import os
 
-# from costs import user_costs
-# import random
-
 currentTime = datetime.now()
 
 app = Flask(__name__)
@@ -43,6 +40,11 @@ class CreateUserCost(FlaskForm):
     cover = StringField('Ссылка на обложку', validators=[DataRequired(), URL()])
 
 
+class CreateItem(FlaskForm):
+    title = StringField('Название', validators=[DataRequired(), Length(min=3, max=80)])
+    value = StringField('Стоимость', validators=[DataRequired()])
+
+
 @app.route('/')
 def homepage():
     user_costs = UserCost.query.all()
@@ -57,10 +59,18 @@ def about():
                            title='Gde moi den`gi?')
 
 
-@app.route('/user-costs/<int:cost_id>')
+@app.route('/user-costs/<int:cost_id>', methods=['GET', 'POST'])
 def get_cost(cost_id):
     user_cost = UserCost.query.get_or_404(escape(cost_id))
-    return render_template('list.html', user_cost=user_cost)
+    create_item_form = CreateItem()
+    if create_item_form.validate_on_submit():
+        title = request.form.get('title')
+        value = int(request.form.get('value'))
+        new_item = CostItem(title=title, value=value, cost_id=cost_id)
+        db.session.add(new_item)
+        db.session.commit()
+        return redirect(f'/user-costs/{cost_id}')
+    return render_template('list.html', user_cost=user_cost, form=create_item_form, cost_id=cost_id)
 
 
 @app.route('/user-costs/create', methods=['GET', 'POST'])

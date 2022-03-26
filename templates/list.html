@@ -8,7 +8,6 @@
 
     <div class="container">
         <h1>{{ user_cost.name }}:</h1>
-
         <div class="row">
             <div class="col-md-9 col-sm-6">
                 <img src="{{ url_for('static', filename='images/diagrams/example.png') }}" class="card-img-top"
@@ -19,35 +18,57 @@
                     <ul class="list-group list-group-flush">
                         {% for item in user_cost['items'] %}
                             <li class="list-group-item">
-                                <span>{{ item.title }}: {{ item.value }}</span>
+                                <span>{{ item.title }}: {{ item.value }} ₽</span>
                             </li>
                         {% endfor %}
                     </ul>
                 </div>
             </div>
+
             <div class="col">
                 <h3>
                     Добавить расходы:
                 </h3>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Название</span>
+                <form action="{{ url_for('get_cost', cost_id=cost_id) }}" method="POST">
+                    {{ form.csrf_token }}
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Название</span>
+                        </div>
+                        <input type="text"
+                               id="title"
+                               name="title"
+                               class="form-control"
+                               placeholder="Транспорт / Еда / Развлечения"
+                               aria-label="Название расхода"
+                               aria-describedby="basic-addon1">
+                        {% if form.title.errors %}
+                            <ul class="errors">
+                                {% for error in form.title.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                     </div>
-                    <input type="text" class="form-control" placeholder="Транспорт / Еда / Развлечения"
-                           aria-label="Название расхода"
-                           aria-describedby="basic-addon1">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Стоимость</span>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Стоимость</span>
+                        </div>
+                        <input type="number"
+                               min="1"
+                               id="value"
+                               name="value"
+                               class="form-control"
+                               placeholder="0"
+                               aria-label="Количество">
+                        <div class="input-group-append">
+                            <span class="input-group-text">₽</span>
+                        </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="0" aria-label="Количество">
-                    <div class="input-group-append">
-                        <span class="input-group-text">₽</span>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-success">Добавить</button>
+                    <button type="submit" class="btn btn-success">Добавить</button>
+                </form>
             </div>
+
         </div>
     </div>
 {% endblock %}
