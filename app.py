@@ -3,9 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from markupsafe import escape
 from werkzeug import exceptions
 from flask_wtf import FlaskForm, CSRFProtect
-from wtforms import StringField
+from wtforms import StringField, EmailField, PasswordField
 from wtforms.validators import DataRequired, Length, URL
 from datetime import datetime
+from flask_login import LoginManager, UserMixin, login_user, logout_user
 import os
 
 currentTime = datetime.now()
@@ -16,6 +17,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
+login_manager = LoginManager(app)
 
 
 class UserCost(db.Model):
@@ -35,6 +37,13 @@ class CostItem(db.Model):
     cost_id = db.Column(db.Integer, db.ForeignKey('user_cost.id'), nullable=False)
 
 
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    email = db.Column(db.String(255), nullable=False, unique=True)
+    password = db.Column(db.String(64), nullable=False)
+    nickname = db.Column(db.String(32), nullable=False)
+
+
 class CreateUserCost(FlaskForm):
     name = StringField('Название', validators=[DataRequired(), Length(min=3, max=80)])
     cover = StringField('Ссылка на обложку', validators=[DataRequired(), URL()])
@@ -43,6 +52,16 @@ class CreateUserCost(FlaskForm):
 class CreateItem(FlaskForm):
     title = StringField('Название', validators=[DataRequired(), Length(min=3, max=80)])
     value = StringField('Стоимость', validators=[DataRequired()])
+
+
+class LoginForm(FlaskForm):
+    email = EmailField('Электронная почта', validators=[DataRequired()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+
+
+@login_manager.user_loader
+def user_loader(user_id):
+    return User.query.get(user_id)
 
 
 @app.route('/')
@@ -57,6 +76,27 @@ def homepage():
 def about():
     return render_template('home.html',
                            title='Gde moi den`gi?')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    login_form = LoginForm()
+    if login_form.validate_on_submit():
+        email = request.form.get('email')
+        password = request.form.get('password')
+        user = User.query.filter_by(email=email, password=password).first()
+        if user:
+            login_user(user)
+            return redirect('/')
+        else:
+            return render_template('login.html', form=login_form)
+    return render_template('login.html', form=login_form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect('/')
 
 
 @app.route('/user-costs/<int:cost_id>', methods=['GET', 'POST'])
