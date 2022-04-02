@@ -16,26 +16,30 @@
 
         <div class="navbar-collapse collapse" id="navbarNav" style="">
             <span class="navbar-text">
-                Имя фамилия
+                {{ current_user.nickname }}
             </span>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('homepage') }}">Мои расходы</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('create_cost') }}">Создать</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('about') }}">О сайте</a>
                 </li>
-                <li class="nav-item">
-
-                    {% if current_user.is_authenticated %}
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('homepage') }}">Мои расходы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('create_cost') }}">Создать</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ url_for('logout') }}" class="nav-link">Выйти</a>
-                    {% else %}
+                    </li>
+                {% else %}
+                    <li>
                         <a href="{{ url_for('login') }}" class="nav-link">Войти</a>
-                    {% endif %}
-                </li>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('register') }}" class="nav-link">Зарегистрироваться</a>
+                    </li>
+                {% endif %}
             </ul>
             <form class="d-flex" action={{ url_for('search') }}>
                 <input class="form-control me-2" type="search" placeholder="Поиск по расходам"

@@ -1,70 +1,20 @@
 from flask import Flask, render_template, abort, request, redirect
-from flask_sqlalchemy import SQLAlchemy
 from markupsafe import escape
 from werkzeug import exceptions
-from flask_wtf import FlaskForm, CSRFProtect
-from wtforms import StringField, EmailField, PasswordField
-from wtforms.validators import DataRequired, Length, URL
-from datetime import datetime
-from flask_login import LoginManager, UserMixin, login_user, logout_user
-from flask_bcrypt import Bcrypt
+from forms import csrf, LoginForm, CreateUserCost, CreateItem, RegistrationForm
+from models import db, bcrypt, User, UserCost, CostItem
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+from random import randint
 import os
-
-currentTime = datetime.now()
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-db = SQLAlchemy(app)
-csrf = CSRFProtect(app)
 login_manager = LoginManager(app)
-bcrypt = Bcrypt(app)
-
-
-class UserCost(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(80), nullable=False)
-    cover = db.Column(db.Text)
-    items = db.relationship('CostItem', backref='list', lazy=True)
-
-    def __repr__(self):
-        return f'<UserCost {self.name}>'
-
-
-class CostItem(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(80), nullable=False)
-    value = db.Column(db.Integer, nullable=False)
-    cost_id = db.Column(db.Integer, db.ForeignKey('user_cost.id'), nullable=False)
-
-
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    email = db.Column(db.String(255), nullable=False, unique=True)
-    password = db.Column(db.String(60), nullable=False)
-    nickname = db.Column(db.String(32), nullable=False)
-
-    def set_password(self, password):
-        self.password = bcrypt.generate_password_hash(password, 10)
-
-    def check_password(self, password):
-        return bcrypt.check_password_hash(self.password, password)
-
-
-class CreateUserCost(FlaskForm):
-    name = StringField('Название', validators=[DataRequired(), Length(min=3, max=80)])
-    cover = StringField('Ссылка на обложку', validators=[DataRequired(), URL()])
-
-
-class CreateItem(FlaskForm):
-    title = StringField('Название', validators=[DataRequired(), Length(min=3, max=80)])
-    value = StringField('Стоимость', validators=[DataRequired()])
-
-
-class LoginForm(FlaskForm):
-    email = EmailField('Электронная почта', validators=[DataRequired()])
-    password = PasswordField('Пароль', validators=[DataRequired()])
+csrf.init_app(app)
+db.init_app(app)
+bcrypt.init_app(app)
 
 
 @login_manager.user_loader
@@ -84,6 +34,24 @@ def homepage():
 def about():
     return render_template('home.html',
                            title='Gde moi den`gi?')
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    register_form = RegistrationForm()
+    if register_form.validate_on_submit():
+        email = request.form.get('email')
+        nickname = request.form.get('nickname')
+        password = request.form.get('password')
+        user = User()
+        user.email = email
+        user.nickname = nickname
+        user.set_password(password)
+        db.session.add(user)
+        db.session.commit()
+        login_user(user)
+        return redirect('/')
+    return render_template('register.html', form=register_form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -112,18 +80,35 @@ def logout():
 @app.route('/user-costs/<int:cost_id>', methods=['GET', 'POST'])
 def get_cost(cost_id):
     user_cost = UserCost.query.get_or_404(escape(cost_id))
+    values = []
+    titles = []
+    colors = []
+    for item in user_cost.items:
+        values.append(int(item.value))
+        titles.append(item.title)
+        colors.append([randint(0, 255), randint(0, 255), randint(0, 255), 0.1])
+    print(colors)
     create_item_form = CreateItem()
     if create_item_form.validate_on_submit():
         title = request.form.get('title')
         value = int(request.form.get('value'))
-        new_item = CostItem(title=title, value=value, cost_id=cost_id)
+        new_item = CostItem(title=title,
+                            value=value,
+                            cost_id=cost_id)
         db.session.add(new_item)
         db.session.commit()
         return redirect(f'/user-costs/{cost_id}')
-    return render_template('list.html', user_cost=user_cost, form=create_item_form, cost_id=cost_id)
+    return render_template('list.html',
+                           user_cost=user_cost,
+                           form=create_item_form,
+                           cost_id=cost_id,
+                           values=values,
+                           titles=titles,
+                           colors=colors)
 
 
 @app.route('/user-costs/create', methods=['GET', 'POST'])
+@login_required
 def create_cost():
     create_user_cost_form = CreateUserCost()
     if create_user_cost_form.validate_on_submit():
@@ -139,7 +124,7 @@ def create_cost():
 @app.route('/search')
 def search():
     text = escape(request.args.get('text', ''))
-    selected_costs = UserCost.query.filter(UserCost.name.like(f'%{text}%')).all()
+    selected_costs = UserCost.query.filter(UserCost.name.ilike(f'%{text}%')).all()
     return render_template('index.html', user_costs=selected_costs)
 
 
@@ -149,4 +134,5 @@ def not_found(error):
 
 
 if __name__ == '__main__':
+    db.create_all()
     app.run()

@@ -5,15 +5,43 @@
 {% endblock %}
 
 {% block content %}
-
     <div class="container">
         <h1>{{ user_cost.name }}:</h1>
         <div class="row">
-            <div class="col-md-9 col-sm-6">
-                <img src="{{ url_for('static', filename='images/diagrams/example.png') }}" class="card-img-top"
-                     alt="{{ user_cost.name }}">
+            <div class="col-lg-8 col-md-8 col-sm-6" id="diagram">
+                <canvas id="myChart" width="350" height="350"></canvas>
+                <script>
+                    const ctx = document.getElementById('myChart').getContext('2d');
+                    const myChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: {{ values }},
+                            datasets: [{
+                                data: {{ values }},
+                                backgroundColor: [
+                                    'rgba({{ colors[0] }})',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        }
+                    });
+                </script>
+
             </div>
-            <div class="col-md-3 col-sm-6">
+            <div class="col-lg-6 col-md-3 col-sm-6">
                 <div class="card">
                     <ul class="list-group list-group-flush">
                         {% for item in user_cost['items'] %}
@@ -39,7 +67,6 @@
                                id="title"
                                name="title"
                                class="form-control"
-                               placeholder="Транспорт / Еда / Развлечения"
                                aria-label="Название расхода"
                                aria-describedby="basic-addon1">
                         {% if form.title.errors %}

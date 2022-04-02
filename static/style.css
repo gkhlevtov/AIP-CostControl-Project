@@ -28,3 +28,18 @@ footer {
     color: white;
     padding: 16px;
 }
+
+#index {
+    margin-top: 64px;
+    margin-bottom: 64px;
+}
+
+.card {
+    margin-top: 16px;
+    margin-bottom: 32px;
+}
+
+#diagram {
+    margin-top: 16px;
+    margin-bottom: 32px;
+}

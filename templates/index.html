@@ -6,6 +6,7 @@
 
 {% block content %}
     <h1 class="mb-5">Мои расходы</h1>
+    {% if current_user.is_authenticated %}
     <div class="row row-cols-1 row-cols-xl-3 row-cols-lg-2 gy-4">
         {% for user_cost in user_costs %}
             <div class="col">
@@ -13,4 +14,7 @@
             </div>
         {% endfor %}
     </div>
+    {% else %}
+        <h2 id="index" class="mb-5">Зарегистрируйтесь, чтобы добавить и просмотреть свои расходы</h2>
+    {% endif %}
 {% endblock %}
