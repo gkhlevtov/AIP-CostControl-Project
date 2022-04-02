@@ -4,7 +4,8 @@ from werkzeug import exceptions
 from forms import csrf, LoginForm, CreateUserCost, CreateItem, RegistrationForm
 from models import db, bcrypt, User, UserCost, CostItem
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from random import randint
+from random import randint, sample
+from colors import rgb
 import os
 
 app = Flask(__name__)
@@ -62,9 +63,7 @@ def login():
     if login_form.validate_on_submit():
         email = request.form.get('email')
         password = request.form.get('password')
-        user = User.query.filter_by(email=email, password=password).first()
-        if user:
-            user = User.query.filter_by(email=email).first()
+        user = User.query.filter_by(email=email).first()
         if user and user.check_password(password):
             login_user(user)
             return redirect('/')
@@ -84,12 +83,19 @@ def get_cost(cost_id):
     user_cost = UserCost.query.get_or_404(escape(cost_id))
     values = []
     titles = []
-    colors = []
+    main_colors = []
+    border_colors = []
+    clr = [[f'rgba({x[0]}, {x[1]}, {x[2]}, 0.8)', f'rgba({x[0]}, {x[1]}, {x[2]}, 1)'] \
+           for x in sample(rgb, k=len(user_cost.items))]
+    for el in clr:
+        main_colors.append(el[0])
+        border_colors.append(el[1])
+
+    print(main_colors[0])
     for item in user_cost.items:
         values.append(int(item.value))
         titles.append(item.title)
-        colors.append([randint(0, 255), randint(0, 255), randint(0, 255), 0.1])
-    print(colors)
+
     create_item_form = CreateItem()
     if create_item_form.validate_on_submit():
         title = request.form.get('title')
@@ -106,7 +112,8 @@ def get_cost(cost_id):
                            cost_id=cost_id,
                            values=values,
                            titles=titles,
-                           colors=colors)
+                           main_colors=main_colors,
+                           border_colors=border_colors)
 
 
 @app.route('/user-costs/create', methods=['GET', 'POST'])
