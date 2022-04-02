@@ -13,7 +13,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 login_manager = LoginManager(app)
 csrf.init_app(app)
+db.app = app
 db.init_app(app)
+db.create_all()
 bcrypt.init_app(app)
 
 
@@ -134,5 +136,4 @@ def not_found(error):
 
 
 if __name__ == '__main__':
-    db.create_all()
     app.run()
