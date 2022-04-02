@@ -3,7 +3,7 @@ from markupsafe import escape
 from werkzeug import exceptions
 from forms import csrf, LoginForm, CreateUserCost, CreateItem, RegistrationForm
 from models import db, bcrypt, User, UserCost, CostItem
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from random import randint
 import os
 
@@ -116,7 +116,8 @@ def create_cost():
     if create_user_cost_form.validate_on_submit():
         name = request.form.get('name')
         cover = request.form.get('cover')
-        new_cost = UserCost(name=name, cover=cover)
+        user_id = current_user.id
+        new_cost = UserCost(name=name, cover=cover, user_id=user_id)
         db.session.add(new_cost)
         db.session.commit()
         return redirect('/')
