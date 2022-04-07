@@ -32,6 +32,7 @@ grpcio==1.45.0
 gunicorn==20.1.0
 h5py==3.6.0
 idna==3.3
+importlib==1.0.4
 importlib-metadata==4.11.3
 itsdangerous==2.1.2
 Jinja2==3.1.1
@@ -50,6 +51,7 @@ pandas==1.4.2
 password==0.2
 Pillow==9.1.0
 protobuf==3.20.0
+psycopg2==2.9.3
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21

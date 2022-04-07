@@ -6,12 +6,12 @@ from models import db, bcrypt, User, UserCost, CostItem
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from random import sample
 from colors import rgb
-import os
+from os import environ
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
 login_manager = LoginManager(app)
 csrf.init_app(app)
 db.app = app
