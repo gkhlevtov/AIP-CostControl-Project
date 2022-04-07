@@ -4,7 +4,7 @@ from werkzeug import exceptions
 from forms import csrf, LoginForm, CreateUserCost, CreateItem, RegistrationForm
 from models import db, bcrypt, User, UserCost, CostItem
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from random import randint, sample
+from random import sample
 from colors import rgb
 import os
 
@@ -91,7 +91,6 @@ def get_cost(cost_id):
         main_colors.append(el[0])
         border_colors.append(el[1])
 
-    print(main_colors[0])
     for item in user_cost.items:
         values.append(int(item.value))
         titles.append(item.title)
