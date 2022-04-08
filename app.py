@@ -31,7 +31,10 @@ def user_loader(user_id):
 
 @app.route('/')
 def homepage():
-    user_costs = UserCost.query.all()
+    if current_user.is_authenticated:
+        user_costs = UserCost.query.filter_by(user_id=current_user.id)
+    else:
+        user_costs = []
     return render_template('index.html',
                            title='Gde moi den`gi?',
                            user_costs=user_costs)
@@ -85,6 +88,11 @@ def logout():
 @app.route('/user-costs/<int:cost_id>', methods=['GET', 'POST'])
 def get_cost(cost_id):
     user_cost = UserCost.query.get_or_404(escape(cost_id))
+    if not current_user.is_authenticated:
+        raise exceptions.Forbidden()
+    elif current_user.id != user_cost.user_id:
+        raise exceptions.Forbidden()
+
     values = []
     titles = []
     main_colors = []
@@ -144,6 +152,11 @@ def search():
 @app.errorhandler(exceptions.NotFound)
 def not_found(error):
     return render_template('404.html'), exceptions.NotFound.code
+
+
+@app.errorhandler(exceptions.Forbidden)
+def forbidden(error):
+    return render_template('403.html'), exceptions.Forbidden.code
 
 
 if __name__ == '__main__':
