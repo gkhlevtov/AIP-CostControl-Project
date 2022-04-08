@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Страница не найдена
+{% endblock %}
+
+{% block content %}
+    <h1 class="mb-5 text-center">Доступ запрещён (ошибка 403)</h1>
+    <h3 class="text-center">
+        <p>
+            У Вас не доступа к данной странице.
+        </p>
+        {% if current_user.is_authenticated %}
+            Попробуйте перейти на <a href="{{ url_for('homepage') }}">главную страницу</a> и выбрать расход из
+            имеющихся, либо
+            создайте новый.
+        {% else %}
+            <a href="{{ url_for('login') }}">Войдите</a> в систему и выберите расход из имеющихся, либо создайте новый.
+        {% endif %}
+    </h3>
+{% endblock %}
