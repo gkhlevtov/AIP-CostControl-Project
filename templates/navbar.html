@@ -41,12 +41,14 @@
                     </li>
                 {% endif %}
             </ul>
-            <form class="d-flex" action={{ url_for('search') }}>
-                <input class="form-control me-2" type="search" placeholder="Поиск по расходам"
-                       aria-label="Search"
-                       name="text">
-                <button class="btn btn-outline-dark" type="submit">Найти</button>
-            </form>
+            {% if current_user.is_authenticated %}
+                <form class="d-flex" action={{ url_for('search') }}>
+                    <input class="form-control me-2" type="search" placeholder="Поиск по расходам"
+                           aria-label="Search"
+                           name="text">
+                    <button class="btn btn-outline-dark" type="submit">Найти</button>
+                </form>
+            {% endif %}
         </div>
     </div>
 </nav>
