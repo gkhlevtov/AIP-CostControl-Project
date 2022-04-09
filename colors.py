@@ -1,5 +1,6 @@
 rgb = []
-for r in range(120, 250):
-    for g in range(120, 250):
-        for b in range(120, 250):
+start, end = 120, 251
+for r in range(start, end):
+    for g in range(start, end):
+        for b in range(start, end):
             rgb.append((r, g, b))
