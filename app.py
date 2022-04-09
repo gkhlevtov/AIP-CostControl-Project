@@ -1,9 +1,9 @@
-from flask import Flask, render_template, abort, request, redirect
+from flask import Flask, render_template, request, redirect
 from markupsafe import escape
 from werkzeug import exceptions
 from forms import csrf, LoginForm, CreateUserCost, CreateItem, RegistrationForm
 from models import db, bcrypt, User, UserCost, CostItem
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from random import sample
 from colors import rgb
 from os import environ
@@ -97,7 +97,7 @@ def get_cost(cost_id):
     titles = []
     main_colors = []
     border_colors = []
-    clr = [[f'rgba({x[0]}, {x[1]}, {x[2]}, 0.8)', f'rgba({x[0]}, {x[1]}, {x[2]}, 1)'] \
+    clr = [[f'rgba({x[0]}, {x[1]}, {x[2]}, 0.8)', f'rgba({x[0]}, {x[1]}, {x[2]}, 1)']
            for x in sample(rgb, k=len(user_cost.items))]
     for el in clr:
         main_colors.append(el[0])
