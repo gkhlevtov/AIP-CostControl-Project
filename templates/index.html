@@ -9,7 +9,7 @@
     {% if current_user.is_authenticated %}
         <div class="row row-cols-1 row-cols-xl-3 row-cols-lg-2 gy-4">
             {% for user_cost in user_costs %}
-                <div class="col">
+                <div class="col-lg-5 col-md-4 col-sm-6 col-xs-4">
                     {% include 'cost-list.html' %}
                 </div>
             {% endfor %}

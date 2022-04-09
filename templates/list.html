@@ -9,38 +9,43 @@
     <div class="container">
         <h1>{{ user_cost.name }}:</h1>
         <div class="row">
-            <div class="col-lg-7 col-md-8 col-sm-6" id="diagram">
-                <canvas id="myChart" width="350" height="350"></canvas>
-                <script>
-                    const ctx = document.getElementById('myChart').getContext('2d');
-                    const myChart = new Chart(ctx, {
-                        type: 'pie',
-                        data: {
-                            labels: {{ titles|tojson }},
-                            datasets: [{
-                                label: '# of Votes',
-                                data: {{ values|tojson }},
-                                backgroundColor: {{ main_colors|tojson }},
-                                borderColor: {{ border_colors|tojson }},
-                                borderWidth: 3
-                            }]
-                        }
-                    });
-                </script>
+            {% if len(user_cost.items) > 0 %}
+                <div class="col-lg-7 col-md-8 col-sm-6" id="diagram">
+                    <canvas id="myChart" width="350" height="350"></canvas>
+                    <script>
+                        const ctx = document.getElementById('myChart').getContext('2d');
+                        const myChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: {{ titles|tojson }},
+                                datasets: [{
+                                    label: '# of Votes',
+                                    data: {{ values|tojson }},
+                                    backgroundColor: {{ main_colors|tojson }},
+                                    borderColor: {{ border_colors|tojson }},
+                                    borderWidth: 3
+                                }]
+                            }
+                        });
+                    </script>
 
-            </div>
-            <div class="col-lg-5 col-md-3 col-sm-6">
-                <div class="card">
-                    <ul class="list-group list-group-flush">
-                        {% for item in user_cost['items'] %}
-                            <li class="list-group-item">
-                                <span>{{ item.title }}: {{ item.value }} ₽</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
                 </div>
-            </div>
-
+                <div class="col-lg-5 col-md-3 col-sm-6">
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            {% for item in user_cost['items'] %}
+                                <li class="list-group-item">
+                                    <span>{{ item.title }}: {{ item.value }} ₽</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-lg-5 col-md-4 col-sm-6">
+                    <h2>Вы ещё не добавили ни одного расхода</h2>
+                </div>
+            {% endif %}
             <div class="col">
                 <h3>
                     Добавить расходы:

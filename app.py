@@ -117,9 +117,11 @@ def get_cost(cost_id):
         db.session.add(new_item)
         db.session.commit()
         return redirect(f'/user-costs/{cost_id}')
+
     return render_template('list.html',
                            user_cost=user_cost,
                            form=create_item_form,
+                           len=len,
                            cost_id=cost_id,
                            values=values,
                            titles=titles,
